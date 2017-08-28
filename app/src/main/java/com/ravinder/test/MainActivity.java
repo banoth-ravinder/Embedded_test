@@ -12,13 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static com.ravinder.test.R.id.next;
-
-public class MainActivity extends AppCompatActivity implements SensorEventListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,SensorEventListener{
 
     private TextView proxity,lightIntensity,accelerometer,Temperature;
-    private Button Next;
+    private Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +23,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Next= (Button) findViewById(next);
-        next.setOnClickListener(new View.OnClickListener());
-            @Override
-            public void onClick(View V){
-            Intent intent= new Intent(MainActivity.this,graph.class);
-            startActivity(intent);
-        }
+//        next= (Button) findViewById(R.id.next);
+//        next.setOnClickListener((v)-> {
+//            Intent intent = new Intent(MainActivity.this, graph.class);
+//            startActivity(intent);
+//        });
 
         proxity = (TextView) findViewById(R.id.humidity);
         accelerometer = (TextView) findViewById(R.id.pressure);
@@ -76,6 +71,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
 
+        initViews();
+        initListerners();
+
+    }
+
+    private void initViews(){
+        next= (Button) findViewById(R.id.next);
+    }
+
+    private void initListerners(){
+        next.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.next:
+                Intent intent = new Intent(MainActivity.this, graph.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override
